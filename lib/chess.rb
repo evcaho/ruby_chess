@@ -8,8 +8,7 @@ class TextUI
 		if user_input == "exit"
 			@terminal.write("exit") 
 		else
-			end_text = end_coordinates(user_input)
-			@terminal.write(end_text)
+			beg_coordinates(user_input)
 		end
 	end
 
@@ -17,9 +16,9 @@ class TextUI
 		input_array = text.split()
 		input_array.last
 	end
-	def beg_coordinates
-		text = @terminal.read
-		@terminal.write(text)
+	def beg_coordinates(text)
+		text_array = text.split()
+		@terminal.write(text_array.first)
 	end
 
 end
@@ -29,7 +28,9 @@ class Terminal
 		gets.chomp
 	end
 	def write(text)
-		puts text
+		text
 	end
 end
 
+textui = TextUI.new(Terminal.new())
+textui.beg_coordinates("D4 t0")
