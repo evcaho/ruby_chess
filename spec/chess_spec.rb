@@ -12,18 +12,18 @@ describe TextUI do
 			expect(@terminal).to receive(:write).with("exit")
 			@textui.exit_game
 		end
-		it "prints beginning coordinates" do
-			expect(@terminal).to receive(:read).and_return("D4 to infinity")
-			expect(@terminal).to receive(:write).with("D4")
+		it "prints move" do
+			expect(@terminal).to receive(:read).and_return("D4 to D7")
+			expect(@terminal).to receive(:write).with("Moved from D4 to D7")
+			@textui.exit_game
+		end
+		it "illegal move" do
+			expect(@terminal).to receive(:read).and_return("D2 to infinity")
+			expect(@terminal).to receive(:write).with("illegal")
 			@textui.exit_game
 		end
 	end
 
-	describe "#beg_coordinates" do
-		it 'should print out first coordinate' do
-      		expect(@textui.beg_coordinates("D4 to infinity")).to eq("D4")
-    	end
-	end
 
 
 end
