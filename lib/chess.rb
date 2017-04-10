@@ -3,7 +3,7 @@ class TextUI
 		@terminal = terminal
 	end
 
-	def exit_game
+	def run_game
 		puts "Welcome"
 		user_input = @terminal.read
 		if user_input == "exit"
@@ -17,13 +17,17 @@ class TextUI
 		end
 	end
 
+	def coordinate_array(text)
+		text.split()
+	end
+
 	def end_coordinates(text)
-		input_array = text.split()
+		input_array = coordinate_array(text)
 		input_array.last
 	end
 	def beg_coordinates(text)
-		text_array = text.split()
-		text_array.first
+		input_array = coordinate_array(text)
+		input_array.first
 	end
 
 	def is_legal?(first_move, second_move)
