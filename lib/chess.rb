@@ -3,31 +3,36 @@ class TextUI
 		@terminal = terminal
 	end
 
-	def run_game
+	def main
 		puts "Welcome"
 		user_input = @terminal.read
-		if user_input == "exit"
-			@terminal.write("exit") 
-		else
-			if is_legal?(beg_coordinates(user_input), end_coordinates(user_input)) 
-				@terminal.write("Moved from #{beg_coordinates(user_input)} to #{end_coordinates(user_input)}")
-			else
-				@terminal.write("illegal")
-			end
+
+		while user_input != "exit"
+			run_game(user_input)
+			user_input = @terminal.read
 		end
+		@terminal.write("exit")
+	end
+
+	def run_game(user_input)
+		if is_legal?(start_move(user_input), end_move(user_input)) 
+			@terminal.write("Moved from #{start_move(user_input)} to #{end_move(user_input)}")
+		
+		else
+			@terminal.write("illegal")
+		end
+
 	end
 
 	def coordinate_array(text)
 		text.split()
 	end
 
-	def end_coordinates(text)
-		input_array = coordinate_array(text)
-		input_array.last
+	def end_move(text)
+		coordinate_array(text).last
 	end
-	def beg_coordinates(text)
-		input_array = coordinate_array(text)
-		input_array.first
+	def start_move(text)
+		coordinate_array(text).first
 	end
 
 	def is_legal?(first_move, second_move)
@@ -37,7 +42,6 @@ class TextUI
 		end
 
 	end
-
 
 end
 
@@ -49,3 +53,5 @@ class Terminal
 		puts text
 	end
 end
+
+
