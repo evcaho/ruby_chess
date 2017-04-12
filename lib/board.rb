@@ -8,7 +8,10 @@ class Board
 		user_input = gets.chomp
 
 		if user_input != "exit"
-			legal?(user_input)
+			if legal?(user_input)
+				@piece.pawn_move
+				puts "Moved to #{@piece.location}. Legal moves are now #{@piece.legal_moves.join("")}"
+			end
 		else
 			puts "exit"
 		end
@@ -24,22 +27,29 @@ class Board
 end
 
 class Piece
-	attr_accessor :legal_moves
+	attr_accessor :legal_moves, :location
 
-	def initialize
-		@start_location = "D1"
-		@legal_moves = ["D2", "D3", "D4"]
-		@move_rules = move_rules
+	def initialize(name, location, legal_moves)
+		@location = location
+		@legal_moves = legal_moves
+		@name = "pawn"
 	end
 
-	def move_rules
-		new_spots = []
-		legal_moves.each do |cell|
+	def new_legal_moves
+		new_moves = []
+		@legal_moves.each do |cell|
 			move_array = cell.split ""
 			new_location = (move_array.at(0) + (((move_array.at(1).to_i) + 1).to_s))
-			new_spots.push(new_location)
+			new_moves.push(new_location)
 		end
-		@legal_moves.replace(new_spots)
+		@legal_moves.replace(new_moves)
+	end
+
+	def pawn_move
+		move_array = @location.split ""
+		new_location = (move_array.at(0) + (((move_array.at(1).to_i) + 1).to_s))
+		new_legal_moves
+		@location = new_location
 	end
 
 	def change_start(move)
@@ -50,9 +60,9 @@ class Piece
 end
 
 
-board = Board.new(Piece.new())
-piece = Piece.new()
-puts piece.move_rules
+
+
+
 
 
 
