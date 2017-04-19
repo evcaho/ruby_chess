@@ -1,24 +1,18 @@
 require "chess"
+require "board"
 
 describe TextUI do
 	before do 
 		@terminal = Terminal.new()
-		@textui = TextUI.new(@terminal)
+		@board = Board.new()
+		@textui = TextUI.new(@terminal, @board)
 	end
 
-	describe "#run_game" do
-		it "prints move" do
-			expect(@terminal).to receive(:write).with("Moved from D4 to D7")
-			@textui.run_game("D4 to D7")
-		end
-		it "illegal move" do
-			expect(@terminal).to receive(:write).with("illegal")
-			@textui.run_game("D2 to infinity")
-		end
-	end
+
 
 	describe "#main" do
 		it "exits" do
+			expect(@terminal).to receive(:write).with("white input move")
 			expect(@terminal).to receive(:read).and_return("exit")
 			expect(@terminal).to receive(:write).with("exit")
 			@textui.main
@@ -26,5 +20,23 @@ describe TextUI do
 	end
 
 
+	describe "#turn" do
+		it "saves" do
+			expect(@terminal).to receive(:write).with("white input move")
+			expect(@terminal).to receive(:read).and_return("save")
+			expect(@terminal).to receive(:write).with("Saved")
+			@textui.turn("white")
+		end
+
+		it "prints move" do 
+			expect(@terminal).to receive(:write).with("black input move")
+			expect(@terminal).to receive(:read).and_return("D3")
+			expect(@terminal).to receive(:write).with("black moves D3.")
+			@textui.turn("black")
+		end
+
+	end
 
 end
+
+
